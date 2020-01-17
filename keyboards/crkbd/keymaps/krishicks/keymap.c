@@ -46,25 +46,25 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_LOWER] = LAYOUT( \
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, KC_LPRN, KC_RPRN, KC_MINS, KC_EQL, KC_TILD,\
+      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, KC_LPRN, KC_RPRN, KC_MINS, KC_EQL,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      XXXXXXX, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                         KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_PIPE,\
+      KC_TAB, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                         KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSLS,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_LSFT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_RSFT,\
+      KC_LSFT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, KC_LBRC, KC_RBRC, XXXXXXX, KC_RSFT,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                         KC_LGUI,   KC_LALT,  KC_TAB,     KC_ENT,  LOWER,  RAISE \
+                                         KC_LGUI,   KC_LALT,  KC_SPC,   XXXXXXX,  LOWER,  RAISE \
                                       //`--------------------------'  `--------------------------'
     ),
 
   [_RAISE] = LAYOUT( \
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, KC_HOME,  KC_UP,  KC_END,  KC_LBRC, KC_RBRC,\
+      XXXXXXX, KC_BRID, KC_BRIU, XXXXXXX, KC_PGUP, KC_HOME,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_PAUS,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      XXXXXXX, KC_VOLD, KC_VOLU, KC_MUTE, KC_BRID, KC_BRIU,                      KC_PGUP, KC_LEFT, KC_DOWN, KC_RGHT, KC_PAUS, XXXXXXX,\
+      XXXXXXX, KC_VOLD, KC_VOLU, KC_MUTE, KC_PGDN, KC_END,                       KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, XXXXXXX, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_LSFT, XXXXXXX, XXXXXXX, KC_COPY, KC_PSTE, XXXXXXX,                      KC_PGDN, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_RSFT,\
+      KC_LSFT, XXXXXXX, XXXXXXX, XXXXXXX,  KC_INS, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_RSFT,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                         KC_LGUI,   KC_LALT,  KC_SPC,     KC_ENT,  LOWER,  RAISE \
+                                         KC_LGUI,   KC_LALT,  KC_SPC,   XXXXXXX,  LOWER,  RAISE \
                                       //`--------------------------'  `--------------------------'
   ),
 
@@ -76,7 +76,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       RGB_MOD, RGB_HUD, RGB_SAD, RGB_VAD, RGB_SPD, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                         KC_LGUI,   KC_LALT,  KC_SPC,     KC_ENT,  LOWER,  RAISE \
+                                         KC_LGUI,   KC_LALT,  KC_SPC,    XXXXXXX,  LOWER,  RAISE \
                                       //`--------------------------'  `--------------------------'
   )
 };
