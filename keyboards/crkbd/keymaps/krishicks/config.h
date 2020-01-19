@@ -43,6 +43,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     #define RGBLIGHT_SAT_STEP 17
     #define RGBLIGHT_VAL_STEP 17
 
+    // RGB lighting will be switched off when the host goes to sleep
+    #define RGBLIGHT_SLEEP
+
     // Undefine RGBLIGHT_ANIMATIONS to save 4KiB
     // #define RGBLIGHT_ANIMATIONS
 #endif
