@@ -49,3 +49,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     // Undefine RGBLIGHT_ANIMATIONS to save 4KiB
     // #define RGBLIGHT_ANIMATIONS
 #endif
+
+#define KC_ESCC MT(MOD_LCTL, KC_ESC)
+#define KC_ENTS MT(MOD_LSFT, KC_ENT)
