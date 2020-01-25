@@ -1,3 +1,4 @@
+EXTRAKEY_ENABLE = yes # Audio control and System control
 
 # If you want to change the display of OLED, you need to change here
 SRC +=  ./lib/glcdfont.c \
