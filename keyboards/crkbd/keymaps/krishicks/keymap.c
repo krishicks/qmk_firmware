@@ -5,12 +5,14 @@
 // Layer names don't all need to be of the same length, obviously, and you can also skip them
 // entirely and just use numbers.
 #define _QWERTY 0
-#define _LOWER 1
-#define _RAISE 2
-#define _ADJUST 3
+#define _DVORAK 1
+#define _LOWER 2
+#define _RAISE 3
+#define _ADJUST 4
 
 enum custom_keycodes {
   QWERTY = SAFE_RANGE,
+  DVORAK,
   LOWER,
   RAISE,
   ADJUST,
@@ -29,6 +31,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       KC_LCTL,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                         KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN, KC_QUOT,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_LSFT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, KC_RSFT,\
+  //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
+                                         KC_LGUI,  KC_LALT,  RAISE,      LOWER,  KC_SPC, RAISE  \
+                                      //`--------------------------'  `--------------------------'
+
+  ),
+
+  [_DVORAK] = LAYOUT( \
+  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
+      KC_ESC,  KC_QUOT, KC_COMM,  KC_DOT,    KC_P,    KC_Y,                         KC_F,    KC_G,    KC_C,    KC_R,    KC_L, KC_BSPC,\
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+      KC_LCTL,    KC_A,    KC_O,    KC_E,    KC_U,    KC_I,                         KC_D,    KC_H,    KC_T,    KC_N,    KC_S, KC_SLSH,\
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+      KC_LSFT, KC_SCLN,    KC_Q,    KC_J,    KC_K,    KC_X,                         KC_B,    KC_M,    KC_W,    KC_V,    KC_Z, KC_RSFT,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                          KC_LGUI,  KC_LALT,  RAISE,      LOWER,  KC_SPC, RAISE  \
                                       //`--------------------------'  `--------------------------'
@@ -65,7 +80,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_LCTL, RGB_HUI, RGB_VAI, RGBRST,  KC_VOLU, KC_BRIU,                      KC_HOME, KC_PGDN, KC_PGUP,  KC_END, XXXXXXX, KC_F12,\
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_LSFT, RGB_HUD, RGB_VAD, KC_MUTE, KC_VOLD, KC_BRID,                      XXXXXXX, XXXXXXX, KC_PSCR, KC_SLCK, KC_PAUS, KC_RSFT,\
+      KC_LSFT, RGB_HUD, RGB_VAD, KC_MUTE, KC_VOLD, KC_BRID,                       QWERTY,  DVORAK, KC_PSCR, KC_SLCK, KC_PAUS, KC_RSFT,\
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                          KC_LGUI,  KC_LALT, _______,    _______,  KC_SPC,  XXXXXXX \
                                       //`--------------------------'  `--------------------------'
@@ -90,30 +105,29 @@ oled_rotation_t oled_init_user(oled_rotation_t rotation) {
   return rotation;
 }
 
-#define L_BASE 0
-#define L_LOWER 2
-#define L_RAISE 4
-#define L_ADJUST 8
-
 void oled_render_layer_state(void) {
-    oled_write_P(PSTR("Layer: "), false);
-    switch (layer_state) {
-        case L_BASE:
-            oled_write_ln_P(PSTR("Default"), false);
-            break;
-        case L_LOWER:
-            oled_write_ln_P(PSTR("Lower"), false);
-            break;
-        case L_RAISE:
-            oled_write_ln_P(PSTR("Raise"), false);
-            break;
-        case L_ADJUST:
-        case L_ADJUST|L_LOWER:
-        case L_ADJUST|L_RAISE:
-        case L_ADJUST|L_LOWER|L_RAISE:
-            oled_write_ln_P(PSTR("Adjust"), false);
-            break;
-    }
+  char string [24];
+  switch (get_highest_layer(default_layer_state|layer_state)) {
+    case _QWERTY:
+      oled_write_ln_P(PSTR("Layer: QWERTY"), false);
+      break;
+    case _DVORAK:
+      oled_write_ln_P(PSTR("Layer: Dvorak"), false);
+      break;
+    case _LOWER:
+      oled_write_ln_P(PSTR("Layer: Lower"), false);
+      break;
+    case _RAISE:
+      oled_write_ln_P(PSTR("Layer: Raise"), false);
+      break;
+    case _ADJUST:
+      oled_write_ln_P(PSTR("Layer: Adjust"), false);
+      break;
+    default:
+      snprintf(string, sizeof(string), "%d",get_highest_layer(default_layer_state|layer_state));
+      oled_write_P(PSTR("Layer: Undef-"),false);
+      oled_write_ln(string, false);
+  }
 }
 
 char keylog_str[24] = {};
@@ -187,7 +201,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     case QWERTY:
       if (record->event.pressed) {
-        persistent_default_layer_set(1UL<<_QWERTY);
+        set_single_persistent_default_layer(_QWERTY);
+      }
+      return false;
+    case DVORAK:
+      if (record->event.pressed) {
+        set_single_persistent_default_layer(_DVORAK);
       }
       return false;
     case LOWER:
